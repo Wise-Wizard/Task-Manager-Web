@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+  </head>
+  <body>
+    <div class="box" id="heading">
+    <h1>Today is <%=dayName%></h1>
+    </div>
+
+    <div class="box">
+    <ul>
+      <% for(var i=0;i<newItemList.length;i++){ %>
+        <div class="item">
+        <input type="checkbox">
+        <p><%=newItemList[i]%><p>
+        </div>
+    <% } %>
+    </ul>
+    <form class="item" action="/" method="post">
+      <input type="text" name="TaskName" placeholder="New Task" autocomplete="off"/>
+      <button type="submit" name="button">+</button>
+    </form>
+     </div>
+
+  </body>
+</html>
