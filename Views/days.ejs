@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="box" id="heading">
-    <h1>Today is <%=dayName%></h1>
+    <h1><%=dayName%></h1>
     </div>
 
     <div class="box">
@@ -17,7 +17,7 @@
       <% for(var i=0;i<newItemList.length;i++){ %>
         <div class="item">
         <input type="checkbox">
-        <p><%=newItemList[i]%><p>
+        <p><%=newItemList[i].taskName%><p>
         </div>
     <% } %>
     </ul>
