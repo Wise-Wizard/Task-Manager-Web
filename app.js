@@ -24,21 +24,35 @@ var options={
     month:'long',
    };
 var day=today.toLocaleDateString("en-US",options);
-if(itemList.length===0)
-{
-    TaskList.insertMany(itemList,function(err){
-        if(err){console.log(err);}
-        else{console.log("Updated Successfully");}
-    });
-    res.redirect("/");
-}
-else{
-    res.render('days',{dayName:day, newItemList:itemList});
-}
+
+TaskList.find({},function(err,foundItems){
+    if(foundItems.length===0)
+    {
+        TaskList.insertMany(itemList,function(err){
+            if(err){console.log(err);}
+            else{console.log("Updated Successfully");}
+        });
+        res.redirect("/");
+    }
+    else{
+        res.render('days',{dayName:day, newItemList:foundItems});
+    }
+});
 });
 
 app.post('/',function(req,res){
-    itemList.push(req.body.TaskName);
+    const newTask=new TaskList({
+        taskName: req.body.TaskName,
+    });
+    newTask.save();
+    itemList.push(newTask);
+    res.redirect('/');
+});
+
+app.post('/delete',function(req,res){
+    TaskList.findByIdAndRemove(req.body.checkbox.trim(),function(err){
+        console.log(err);
+    });
     res.redirect('/');
 });
 
@@ -53,15 +67,15 @@ const ToDOSchema=new mongoose.Schema({
 });
 
 const TaskList=mongoose.model("TaskList",ToDOSchema);
-const BuyFood= new TaskList({
+const task1= new TaskList({
     taskName:"Welcome to Task Manager"
 });
-const CookFood= new TaskList({
+const task2= new TaskList({
     taskName:"Tap the + icon to add a Task"
 });
-const EatFood= new TaskList({
+const task3= new TaskList({
     taskName:"Tap on Checkbox to delete a Task"
 });
 
-var itemList=[BuyFood,CookFood,EatFood];
+var itemList=[task1,task2,task3];
 
